@@ -31,7 +31,7 @@ public class JeuMastermind implements Jeu {
 
         // On vérfie si on est en mode test pour afficher le code secret
         if (testRun) {
-            printSecret();
+            printTestModeSecret();
         }
 
         // On entre dans une loop tant que l'utilisateur n'a pas réussi de deviner le code
@@ -125,11 +125,12 @@ public class JeuMastermind implements Jeu {
                 if (inputStr.length() != 4) {
                     error = true;
                 } else {
-                    int input = Integer.parseInt(inputStr);
+                    // on essaie de parser un entier depuis le code entré pour s'assurer qu'il n'y a que des chiffres
+                    Integer.parseInt(inputStr);
                     done = true;
-                    return transformerIntEnHMap(input);
+                    return transformerCodeEnHMap(inputStr);
                 }
-                // On catch l'exception si le formattage est échoué
+                // On catch l'exception si le code entré contient des caractères autres que des chiffres est échoué
             } catch (NumberFormatException e) {
                 error = true;
             }
@@ -138,13 +139,13 @@ public class JeuMastermind implements Jeu {
     }
 
     public HashMap<String, ArrayList<Integer>> obtenirSecret() {
-        int code = 0;
+        String code = "";
         for (int i = 0; i < 4; i++) {
-            // On somme les chiffres générés entre 1 et 9 multipliés par 10 à la puissance @int i ( e.g. 1, 10, 100, ou 1000 )
-            code += (int) ((new Random().nextInt(9) + 1) * Math.pow(10, i));
+            // On concatene les chiffres générés entre 1 et 9
+            code += String.valueOf((new Random().nextInt(9) + 1));
         }
         // On tranfrome ainsi le resultat en HashMap
-        return transformerIntEnHMap(code);
+        return transformerCodeEnHMap(code);
     }
 
 
@@ -183,17 +184,18 @@ public class JeuMastermind implements Jeu {
         System.out.println("Bravoo, you got it !! Vous avez gagné après " + tentaives + " tentatives.");
     }
 
-    public void printSecret() {
+    public void printTestModeSecret() {
         String[] secretString = new String[4];
         for (String i : secret.keySet()) {
             for (int pos : secret.get(i)) {
                 secretString[pos] = i;
             }
         }
+        System.out.print("\n!! Vous etes en mode de TEST !! \nCode secret : ");
         for (String s : secretString) {
             System.out.print(s);
         }
-        System.out.print("\n");
+        System.out.println("\n");
     }
 
 }
