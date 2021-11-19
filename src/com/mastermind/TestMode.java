@@ -1,5 +1,5 @@
 package com.mastermind;
 
-public enum TestEnum {
+public enum TestMode {
     ACTIVER, DESACTIVER
 }

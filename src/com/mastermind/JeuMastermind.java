@@ -16,9 +16,9 @@ public class JeuMastermind implements Jeu {
         testRun = false;
     }
 
-    public JeuMastermind(TestEnum testEnum) {
+    public JeuMastermind(TestMode testEnum) {
         // On verifie si le mode de test est activé
-        testRun = testEnum.equals(TestEnum.ACTIVER);
+        testRun = testEnum.equals(TestMode.ACTIVER);
     }
 
     @Override
